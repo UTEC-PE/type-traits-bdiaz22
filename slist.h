@@ -75,7 +75,7 @@ class SList {
         bool remove(T item) {
             Node<T> *current = head;
             Node<T> *temp = head;
-            while(!current)
+            while(current != NULL)
             {
                 temp = current->next;
                 if(temp->data == item)
