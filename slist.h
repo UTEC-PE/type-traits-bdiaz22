@@ -8,7 +8,10 @@ class SListIterator : public Iterator<T> {
     public: 
         SListIterator() : Iterator<T>() {};
         SListIterator(Node<T> *current) : Iterator<T>(current) {};
-        SListIterator<T> operator++();
+        SListIterator<T> operator++(){
+            this->current = this->current->next;
+            return *this;
+        }
 };
 
 template <typename Tr>
@@ -27,24 +30,81 @@ class SList {
             head = nullptr;
         };
 
-        bool find(T search, Node<T> **&pointer) {
-            // TODO
+        bool find(T search, Node<T> **&pointer) 
+        {
+            pointer = &head;
+            while((*pointer)->next != NULL)
+            {
+                if((*pointer)->data == search)
+                    return true;
+
+                if(!cmp((*pointer)->data, search))
+                    return false;
+                
+                pointer = &((*pointer)->next);
+            }
+            return false;
         }
              
         bool insert(T data) {
-            // TODO
+            Node<T> **temp = &head;  
+            if(!head)
+            {
+                head = new Node<T>(data);
+                head->next = NULL;
+                return true;
+            }
+            else if(!find(data,temp))
+            {
+                Node<T> *created_node = new Node<T>(data);
+                if((*temp)->next == NULL)
+                {
+                    created_node->next = NULL;
+                    (*temp)->next = created_node;
+                }
+                else
+                {
+                    created_node->next = (*temp)->next;
+                    (*temp)->next = created_node;
+                }
+                return true;
+            }          
+            return false;
         }
              
         bool remove(T item) {
-            // TODO
+            Node<T> *current = head;
+            Node<T> *temp = head;
+            while(!current)
+            {
+                temp = current->next;
+                if(temp->data == item)
+                {
+                    current->next = temp->next;
+                    delete temp;
+                    return true;
+                }
+                current = current->next;    
+            }
+            return false;
         }  
              
         iterator begin() {
-            // TODO
+            if(!head)
+                throw "Lista Vacia";
+            else{                
+                SListIterator<T> first(head);
+                return first;
+            }
         }
              
         iterator end() {
-            // TODO
+            if(!head)
+                throw "Lista Vacia";
+            else{
+                SListIterator<T> last(NULL);
+                return last;
+            }
         }
              
         ~SList() {

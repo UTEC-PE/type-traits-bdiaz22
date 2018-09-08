@@ -9,12 +9,24 @@ class Iterator {
         Node<T>* current;
       
     public:
-        Iterator() : current(nullptr) {};
-        Iterator(Node<T>* current) : current(current) {};
-             
-        Iterator<T> operator=(Iterator<T> other);
-        bool operator!=(Iterator<T> other);
-        T operator*();
+        Iterator() : current(nullptr) {
+        };
+        Iterator(Node<T>* current) : current(current) {
+        };             
+        Iterator<T> operator=(Iterator<T> other)
+        {
+        	current = other.current;
+        	return *this;
+        }
+        bool operator!=(Iterator<T> other)
+        {
+        	return current != other.current;
+
+        }
+        T operator*()
+        {
+        	return current->data;
+        }
 };  
 
 #endif
