@@ -46,7 +46,7 @@ class SList {
             return false;
         }
              
-        bool insert(T data) {
+        bool insert(T data) { // Tienes lógica repetida en tu insert
             Node<T> **temp = &head;  
             if(!head)
             {
@@ -72,7 +72,7 @@ class SList {
             return false;
         }
              
-        bool remove(T item) {
+        bool remove(T item) { // No estás usando el find
             Node<T> *current = head;
             Node<T> *temp = head;
             while(current != NULL)
